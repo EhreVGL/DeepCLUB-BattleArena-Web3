@@ -29,7 +29,7 @@ namespace Solana.Unity.SDK
         public RpcCluster rpcCluster = RpcCluster.DevNet;
         public string customRpc = string.Empty;
         public string webSocketsRpc;
-        public bool autoConnectOnStartup;
+        public bool autoConnectOnStartup, wallet;
         public WalletBase WalletBase {
         
             get => _wallet;
@@ -266,7 +266,10 @@ namespace Solana.Unity.SDK
             var walletAdapter = new SolanaWalletAdapter(solanaWalletAdapterOptions, rpcCluster, customRpc, webSocketsRpc, false);
             var acc = await walletAdapter.Login();
             if (acc != null)
+            {
+                wallet = true;
                 WalletBase = walletAdapter;
+            }
             return acc;
         }
 

@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using Solana.Unity.SDK;
 
 public class ServerControl : MonoBehaviourPunCallbacks
 {
@@ -86,6 +87,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
             electricPosZ = 80;
             electric.transform.localScale = new Vector3(electricPosX, electric.transform.localScale.y, electricPosZ);
             UIManager.uIManager.playerCount.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString() + " / " + 4;
+            wallet = FindObjectOfType<Web3>().wallet;
         }
         if (GameObject.FindGameObjectsWithTag("Player").Length == 4)
         {
