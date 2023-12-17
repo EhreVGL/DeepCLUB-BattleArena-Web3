@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - spawnPoint2
+  - spawnPoint1
+  - spawnPoint3
+  - spawnPoint4
+  - View
+  - 0
+  - 1
+  - Avatar
+  - PowerupPoint1
+  - PowerupPoint2
+  - PowerupPoint3
+  - PowerupPoint4
+  - Ground
+  - Lift
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Electric
+  - Water
+  - UI
+  - Point
+  - Ground
+  - Avatar
+  - Powerup
+  - Power
+  - Health
+  - Player
+  - Grass
+  - Grasses
+  - PlayerArea
+  - WallDetection
+  - Wall
+  - Marker
+  - Collectable
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
