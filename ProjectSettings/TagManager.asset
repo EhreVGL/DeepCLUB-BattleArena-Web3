@@ -18,6 +18,7 @@ TagManager:
   - PowerupPoint4
   - Ground
   - Lift
+  - Bullet
   layers:
   - Default
   - TransparentFX

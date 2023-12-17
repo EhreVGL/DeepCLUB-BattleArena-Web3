@@ -1626,7 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 5.728255, z: -2.83495}
+  m_FollowOffset: {x: 0, y: 6.582262, z: -2.669787}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -7229,7 +7229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 5.728255, z: -2.83495}
+  m_FollowOffset: {x: 0, y: 6.582262, z: -2.669787}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -13322,7 +13322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 5.728255, z: -2.83495}
+  m_FollowOffset: {x: 0, y: 6.582262, z: -2.669787}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -22867,6 +22867,7 @@ MonoBehaviour:
   customRpc: https://api.devnet.solana.com/
   webSocketsRpc: 
   autoConnectOnStartup: 0
+  wallet: 0
   web3AuthWalletOptions:
     appName: Web3Auth Sample App
     logoLight: 
@@ -34827,7 +34828,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 262143
+    m_Bits: 786431
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -68126,7 +68127,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7025446404211701004}
-  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: -1, y: -0, z: -0, w: 0}
   m_LocalPosition: {x: 0.01, y: 0, z: 0}
   m_LocalScale: {x: 1.013075, y: 1.126509, z: 1.3954014}
   m_ConstrainProportionsScale: 0
