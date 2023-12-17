@@ -126,6 +126,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
             }
             else if (!leave && player != null && GameObject.FindGameObjectsWithTag("Player").Length == 1)
             {
+                UIManager.uIManager.leave.gameObject.SetActive(true);
                 Win();
             }
             //else if (leave && GameObject.FindGameObjectsWithTag("Player").Length == 1)
