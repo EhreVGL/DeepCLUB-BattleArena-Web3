@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviourPun
             if (other.gameObject.layer == 9)
             {
                 string otherName = other.gameObject.name;
-                photonView.RPC("PowerupAttack", RpcTarget.All, otherName, super);
+                photonView.RPC("PowerupAttack", RpcTarget.All, otherName);
                 PhotonNetwork.Destroy(gameObject);
             }
             //if (other.gameObject.layer == 0)
@@ -113,7 +113,7 @@ public class Bullet : MonoBehaviourPun
         ShowDamage(newAttack.ToString(), other.transform.position + Vector3.up, other.transform.rotation);
         if (!super)
         {
-            parent.GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + 1, 1).SetEase(Ease.Linear);
+            parent.GetComponent<Player>().superBar.DOFillAmount(parent.GetComponent<Player>().superBar.fillAmount + .2f, 1).SetEase(Ease.Linear);
         }
         if (other.GetComponent<Player>().health == 0)
         {
@@ -159,7 +159,7 @@ public class Bullet : MonoBehaviourPun
         }
     }
     [PunRPC]
-    void PowerupAttack(string otherName, bool super)
+    void PowerupAttack(string otherName)
     {
         GameObject other = GameObject.Find(otherName).gameObject;
         if (parent.GetComponent<PlayerAttackRange>() != null)
@@ -197,10 +197,6 @@ public class Bullet : MonoBehaviourPun
             {
                 powerReduceBar.DOFillAmount(powerBar.fillAmount, .25f).SetEase(Ease.Linear);
             });
-        if (!super)
-        {
-            parent.GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + 1, 1).SetEase(Ease.Linear);
-        }
         if (powerHealth == 0)
         {
             other.transform.GetChild(other.transform.childCount - 1).DORotate(new Vector3(27, 0, 0), .5f).SetEase(Ease.Linear);

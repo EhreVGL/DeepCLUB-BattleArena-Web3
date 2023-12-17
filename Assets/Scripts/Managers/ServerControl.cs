@@ -24,7 +24,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
     public int /*myTeamNumber, teamNumber,*/ step, viewId, index, killCount;
     public string nickName;
     public bool chatAtcive;
-    public GameObject electric, lift;
+    public GameObject electric, lift, portal;
     float electricPosX, electricPosZ;
     public bool start, leave, mod;
     public List<GameObject> powerups, collectable;

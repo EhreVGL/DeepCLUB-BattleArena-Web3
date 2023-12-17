@@ -59,17 +59,17 @@ public class PlayerAttackMelee : MonoBehaviour
             Array.Sort(colliders, new DistanceCompare(transform));
             foreach (var item in colliders)
             {
-                if (item.gameObject.layer == 9)
-                {
-                    transform.LookAt(item.transform);
-                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    AttackSwordPowerup(item, player.attack, false);
-                    break;
-                }
-                else if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
+                if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
                 {
                     transform.LookAt(item.transform);
                     AttackSword(item, player.attack, false);
+                    break;
+                }
+                else if (item.gameObject.layer == 9)
+                {
+                    transform.LookAt(item.transform);
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                    AttackSwordPowerup(item, player.attack);
                     break;
                 }
             }
@@ -87,17 +87,17 @@ public class PlayerAttackMelee : MonoBehaviour
             Array.Sort(colliders, new DistanceCompare(transform));
             foreach (var item in colliders)
             {
-                if (item.gameObject.layer == 9)
-                {
-                    transform.LookAt(item.transform);
-                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    AttackSwordPowerup(item, player.attack * 3, true);
-                    break;
-                }
-                else if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
+                if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
                 {
                     transform.LookAt(item.transform);
                     AttackSword(item, player.attack * 3, true);
+                    break;
+                }
+                else if (item.gameObject.layer == 9)
+                {
+                    transform.LookAt(item.transform);
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                    AttackSwordPowerup(item, player.attack * 3);
                     break;
                 }
             }
@@ -131,7 +131,7 @@ public class PlayerAttackMelee : MonoBehaviour
                 {
                     transform.LookAt(item.transform);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    AttackSwordPowerup(item, player.attack, false);
+                    AttackSwordPowerup(item, player.attack);
                     return;
                 }
             }
@@ -180,7 +180,7 @@ public class PlayerAttackMelee : MonoBehaviour
                 {
                     transform.LookAt(item.transform);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    AttackSwordPowerup(item, player.attack * 3, true);
+                    AttackSwordPowerup(item, player.attack * 3);
                     return;
                 }
             }
@@ -287,10 +287,10 @@ public class PlayerAttackMelee : MonoBehaviour
         string otherName = other.gameObject.name;
         photonView.RPC("AttackMelee", RpcTarget.All, otherName, attack, super);
     }
-    public void AttackSwordPowerup(Collider other, float attack, bool super)
+    public void AttackSwordPowerup(Collider other, float attack)
     {
         string otherName = other.gameObject.name;
-        photonView.RPC("PowerupAttackMelee", RpcTarget.All, otherName, attack, super);
+        photonView.RPC("PowerupAttackMelee", RpcTarget.All, otherName, attack);
     }
     [PunRPC]
     void AttackMelee(string otherName, float attack, bool super)
@@ -317,7 +317,7 @@ public class PlayerAttackMelee : MonoBehaviour
         //GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + 1, 1).SetEase(Ease.Linear);
         if (!super)
         {
-            GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + 1, 1).SetEase(Ease.Linear);
+            GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + .2f, 1).SetEase(Ease.Linear);
         }
         if (other.GetComponent<Player>().health == 0)
         {
@@ -364,7 +364,7 @@ public class PlayerAttackMelee : MonoBehaviour
         }
     }
     [PunRPC]
-    void PowerupAttackMelee(string otherName, float attack, bool super)
+    void PowerupAttackMelee(string otherName, float attack)
     {
         GameObject other = GameObject.Find(otherName).gameObject;
         GameObject canvas = other.transform.GetChild(0).gameObject;
@@ -384,10 +384,6 @@ public class PlayerAttackMelee : MonoBehaviour
             {
                 powerReduceBar.DOFillAmount(powerBar.fillAmount, .25f).SetEase(Ease.Linear);
             });
-        if (!super)
-        {
-            GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + 1, 1).SetEase(Ease.Linear);
-        }
         if (powerHealth == 0)
         {
             //Kutu açýlma animasyonu olacak

@@ -136,7 +136,7 @@ public class Avatar : MonoBehaviour
             transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
             transform.GetChild(ServerControl.server.avatarsId[0]).GetComponent<Animator>().SetBool("Walk", true);
         }
-        else
+        else if(pressed && !UIManager.uIManager.ai)
         {
             transform.GetChild(ServerControl.server.avatarsId[0]).GetComponent<Animator>().SetBool("Walk", false);
         }

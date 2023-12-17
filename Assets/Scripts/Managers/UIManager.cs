@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.AI;
 
 public class UIManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class UIManager : MonoBehaviour
     public List<TextMeshProUGUI> playersNicknames;
     public List<Image> playersCharacter;
     public Button play, settings, character;
-    public Button messageOpen, leave, playersCam, mainHome, home, playGame;
+    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame;
     public TMP_InputField message, messageArea;
     public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, token, collect;
     public GameObject killImage, warningImage, damagePopup, settingsPanel;
@@ -36,6 +37,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Slider effectsound, mainSound;
     [SerializeField] List<Sprite> hairs;
     public Sprite winSprite, loseSprite;
+    public bool ai;
     private void Awake()
     {
         uIManager = this;
@@ -62,6 +64,7 @@ public class UIManager : MonoBehaviour
         home.onClick.AddListener(LeaveSettings);
         playersCam.onClick.AddListener(PlayerCamChange);
         messageOpen.onClick.AddListener(MessageOpen);
+        moveGame.onClick.AddListener(GameMove);
     }
     void AvatarPanelsActive(int avatarPanel)
     {
@@ -110,6 +113,29 @@ public class UIManager : MonoBehaviour
                 PhotonNetwork.ConnectUsingSettings();
                 ServerControl.server.nickName = nicknameText.text;
                 StepZero();
+            }
+        }
+    }
+    void GameMove()
+    {
+        if (moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move Game")
+        {
+            ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().isStopped = false;
+            ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().SetDestination(ServerControl.server.portal.transform.position);
+            ai = true;
+            moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stop";
+        }
+        else
+        {
+            moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move Game";
+            ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().isStopped = true;
+            ai = false;
+        }
+        for (int i = 0; i < ServerControl.server.mainAvatar.transform.childCount; i++)
+        {
+            if (ServerControl.server.mainAvatar.transform.GetChild(i).gameObject.activeSelf)
+            {
+                ServerControl.server.mainAvatar.transform.GetChild(i).GetComponent<Animator>().SetBool("Walk", ai);
             }
         }
     }
@@ -266,6 +292,7 @@ public class UIManager : MonoBehaviour
         messageArea.text = "";
         messageOpen.gameObject.SetActive(true);
         playerCount.gameObject.SetActive(true);
+        moveGame.gameObject.SetActive(true);
 #if UNITY_ANDROID || UNITY_IOS
         freeLookMobile.gameObject.SetActive(true);
         moveJoystick.gameObject.SetActive(true);
