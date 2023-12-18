@@ -59,6 +59,7 @@ public class PlayerAttackWizard : MonoBehaviour
             {
                 if (item.gameObject.layer == 9)
                 {
+                    Debug.Log(item.gameObject.name);
                     transform.LookAt(item.transform);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     firePoint.position = item.transform.position + Vector3.up * 3;
@@ -67,6 +68,7 @@ public class PlayerAttackWizard : MonoBehaviour
                 }
                 else if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
                 {
+                    Debug.Log(item.gameObject.name);
                     transform.LookAt(item.transform);
                     firePoint.position = item.transform.position + Vector3.up * 3;
                     SpawnBullet();

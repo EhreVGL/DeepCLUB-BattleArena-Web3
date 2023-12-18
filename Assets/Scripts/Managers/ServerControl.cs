@@ -120,34 +120,22 @@ public class ServerControl : MonoBehaviourPunCallbacks
             electric.transform.localScale = new Vector3(electricPosX, electric.transform.localScale.y, electricPosZ);
             if (!leave && player == null && GameObject.FindGameObjectsWithTag("Player").Length >= 2)
             {
+                UIManager.uIManager.win.text = (GameObject.FindGameObjectsWithTag("Player").Length + 1).ToString() + ".";
                 Lose();
             }
             else if(!leave && player == null && GameObject.FindGameObjectsWithTag("Player").Length < 2 && GameObject.FindGameObjectsWithTag("Player").Length >= 1)
             {
+                myResult = GameObject.FindGameObjectsWithTag("Player").Length + 1;
+                UIManager.uIManager.win.text = (GameObject.FindGameObjectsWithTag("Player").Length + 1).ToString() + ".";
                 Win();
             }
             else if (!leave && player != null && GameObject.FindGameObjectsWithTag("Player").Length == 1)
             {
+                myResult = GameObject.FindGameObjectsWithTag("Player").Length;
+                UIManager.uIManager.win.text = (GameObject.FindGameObjectsWithTag("Player").Length).ToString() + ".";
                 UIManager.uIManager.leave.gameObject.SetActive(true);
                 Win();
             }
-            //else if (leave && GameObject.FindGameObjectsWithTag("Player").Length == 1)
-            //{
-            //    if (wallet)
-            //    {
-            //        UIManager.uIManager.collect.text = (4 - myResult).ToString() + " x" + " 50" + " + " + tokenCount.ToString() + " x" + " 50" + " = " + result.ToString();
-            //        int token = int.Parse(UIManager.uIManager.token.text);
-            //        int coin = int.Parse(UIManager.uIManager.coin.text);
-            //        UIManager.uIManager.token.text = (token + result).ToString();
-            //        UIManager.uIManager.coin.text = (coin + result).ToString();
-            //    }
-            //    else
-            //    {
-            //        UIManager.uIManager.collect.text = (4 - myResult).ToString() + " x" + " 50" + " + " + coinCount.ToString() + " x" + " 50" + " = " + result.ToString();
-            //        int coin = int.Parse(UIManager.uIManager.coin.text);
-            //        UIManager.uIManager.coin.text = (coin + result).ToString();
-            //    }
-            //}
         }
     }
     IEnumerator LeavePlayers()
@@ -170,8 +158,6 @@ public class ServerControl : MonoBehaviourPunCallbacks
     void Win()
     {
         AudioSource.PlayClipAtPoint(win, transform.position, .5f);
-        myResult = GameObject.FindGameObjectsWithTag("Player").Length;
-        UIManager.uIManager.win.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
         UIManager.uIManager.win.transform.parent.GetComponent<Image>().sprite = UIManager.uIManager.winSprite;
         UIManager.uIManager.win.transform.parent.gameObject.SetActive(true);
         result = ((4 - myResult) * 50);
@@ -196,8 +182,6 @@ public class ServerControl : MonoBehaviourPunCallbacks
     void Lose()
     {
         AudioSource.PlayClipAtPoint(gameOver, transform.position, .5f);
-        myResult = GameObject.FindGameObjectsWithTag("Player").Length;
-        UIManager.uIManager.win.text = GameObject.FindGameObjectsWithTag("Player").Length.ToString();
         UIManager.uIManager.win.transform.parent.GetComponent<Image>().sprite = UIManager.uIManager.loseSprite;
         UIManager.uIManager.win.transform.parent.gameObject.SetActive(true);
         if (wallet)
@@ -259,10 +243,6 @@ public class ServerControl : MonoBehaviourPunCallbacks
     void GameExit()
     {
         electric.gameObject.SetActive(false);
-        //for (int i = 0; i < characters.Count; i++)
-        //{
-        //    characters[i].gameObject.SetActive(false);
-        //}
         for (int i = 0; i < floors.Count; i++)
         {
             floors[i].SetActive(false);
@@ -271,11 +251,19 @@ public class ServerControl : MonoBehaviourPunCallbacks
         {
             powerups[i].SetActive(false);
             powerups[i].transform.GetChild(1).gameObject.SetActive(false);
+            powerups[i].transform.GetChild(powerups[i].transform.childCount - 1).rotation = Quaternion.Euler(-90, 0, 0);
+            powerups[i].transform.GetChild(powerups[i].transform.childCount - 2).rotation = Quaternion.Euler(-90, 90, 270);
+            powerups[i].transform.GetChild(powerups[i].transform.childCount - 3).rotation = Quaternion.Euler(-90, 180, 180);
+            powerups[i].transform.GetChild(powerups[i].transform.childCount - 4).rotation = Quaternion.Euler(-90, 270, 90);
         }
         for (int i = 0; i < collectable.Count; i++)
         {
             collectable[i].SetActive(false);
             collectable[i].transform.GetChild(1).gameObject.SetActive(false);
+            collectable[i].transform.GetChild(collectable[i].transform.childCount - 1).rotation = Quaternion.Euler(-90, 0, 0);
+            collectable[i].transform.GetChild(collectable[i].transform.childCount - 2).rotation = Quaternion.Euler(-90, 90, 270);
+            collectable[i].transform.GetChild(collectable[i].transform.childCount - 3).rotation = Quaternion.Euler(-90, 180, 180);
+            collectable[i].transform.GetChild(collectable[i].transform.childCount - 4).rotation = Quaternion.Euler(-90, 270, 90);
         }
         Camera.main.transform.position = camPos;
         Camera.main.transform.rotation = camRot;
