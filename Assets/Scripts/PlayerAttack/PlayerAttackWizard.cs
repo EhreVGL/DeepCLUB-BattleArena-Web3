@@ -65,7 +65,7 @@ public class PlayerAttackWizard : MonoBehaviour
                     SpawnBullet();
                     break;
                 }
-                else if (item.gameObject.layer == 9 && item.GetComponent<Player>().meshes[0].activeSelf)
+                else if (item.gameObject.layer == 9)
                 {
                     Debug.Log(item.gameObject.name);
                     transform.LookAt(item.transform);
@@ -87,7 +87,7 @@ public class PlayerAttackWizard : MonoBehaviour
             Array.Sort(colliders, new DistanceCompare(transform));
             foreach (var item in colliders)
             {
-                if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
+                if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name && item.GetComponent<Player>().meshes[0].activeSelf)
                 {
                     transform.LookAt(item.transform);
                     firePoint.position = item.transform.position + Vector3.up * 3;
