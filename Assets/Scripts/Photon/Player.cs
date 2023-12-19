@@ -147,8 +147,8 @@ public class Player : MonoBehaviour
             if (other.gameObject.layer == 10 && (powerForce == null || powerForce.collectable))
             {
                 string otherName = other.gameObject.name;
-                photonView.RPC("PowerAttack", RpcTarget.All, otherName);
-                photonView.RPC("PowerHealth", RpcTarget.All, otherName);
+                photonView.RPC("Power", RpcTarget.All, otherName);
+                //photonView.RPC("PowerHealth", RpcTarget.All, otherName);
             }
             if (other.gameObject.layer == 19)
             {
@@ -346,19 +346,9 @@ public class Player : MonoBehaviour
         canvas.SetActive(true);
     }
     [PunRPC]
-    void PowerAttack(string otherName)
+    void Power(string otherName)
     {
         attack += 50;
-        GameObject other = GameObject.Find(otherName).gameObject;
-        other.gameObject.SetActive(false);
-        powerCount++;
-        powerText.text = powerCount.ToString();
-        powerImage.gameObject.SetActive(true);
-        AudioSource.PlayClipAtPoint(collect, transform.position, .5f);
-    }
-    [PunRPC]
-    void PowerHealth(string otherName)
-    {
         health += 400;
         maxHealth += 400;
         healthText.text = ((int)health).ToString();
@@ -368,7 +358,26 @@ public class Player : MonoBehaviour
             {
                 healthBar.DOFillAmount(healthReduceBar.fillAmount, .25f).SetEase(Ease.Linear);
             });
+        GameObject other = GameObject.Find(otherName).gameObject;
+        other.gameObject.SetActive(false);
+        powerCount++;
+        powerText.text = powerCount.ToString();
+        powerImage.gameObject.SetActive(true);
+        AudioSource.PlayClipAtPoint(collect, transform.position, .5f);
     }
+    //[PunRPC]
+    //void PowerHealth(string otherName)
+    //{
+    //    health += 400;
+    //    maxHealth += 400;
+    //    healthText.text = ((int)health).ToString();
+    //    healthReduceBar.color = Color.blue;
+    //    healthReduceBar.DOFillAmount(health / maxHealth, .25f).
+    //        SetEase(Ease.Linear).OnComplete(() =>
+    //        {
+    //            healthBar.DOFillAmount(healthReduceBar.fillAmount, .25f).SetEase(Ease.Linear);
+    //        });
+    //}
     [PunRPC]
     void TokenCollect(string otherName)
     {

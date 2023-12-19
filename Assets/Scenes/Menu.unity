@@ -1747,7 +1747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 5.990853, z: -2.998714}
+  m_FollowOffset: {x: 0, y: 5.936829, z: -2.985237}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -2944,7 +2944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 5.990853, z: -2.998714}
+  m_FollowOffset: {x: 0, y: 5.936829, z: -2.985237}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -4176,7 +4176,7 @@ GameObject:
   - component: {fileID: 362373659}
   - component: {fileID: 362373658}
   m_Layer: 19
-  m_Name: 3d logo
+  m_Name: 3d logo1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8539,7 +8539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 0
-  m_FollowOffset: {x: 0, y: 5.990853, z: -2.998714}
+  m_FollowOffset: {x: 0, y: 5.936829, z: -2.985237}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -14162,7 +14162,7 @@ GameObject:
   - component: {fileID: 1211356957}
   - component: {fileID: 1211356956}
   m_Layer: 19
-  m_Name: 3d logo
+  m_Name: 3d logo2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24620,7 +24620,7 @@ GameObject:
   - component: {fileID: 2112471639}
   - component: {fileID: 2112471638}
   m_Layer: 19
-  m_Name: 3d logo
+  m_Name: 3d logo3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

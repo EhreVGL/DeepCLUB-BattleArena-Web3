@@ -173,7 +173,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
         else
         {
             result += (coinCount * 25);
-            UIManager.uIManager.collect.text = (4 - myResult).ToString() + " x" + " 25" + " + " + coinCount.ToString() + " x" + " 25" + " = " + result.ToString();
+            UIManager.uIManager.collect.text = (4 - myResult).ToString() + " x" + " 50" + " + " + coinCount.ToString() + " x" + " 25" + " = " + result.ToString();
             int coin = int.Parse(UIManager.uIManager.coin.text);
             UIManager.uIManager.coin.text = (coin + result).ToString();
         }
