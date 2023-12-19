@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     public List<Sprite> characterImages;
     public FloatingJoystick moveJoystick;
     public FixedJoystick shootJoystick, superJoystick;
-    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject canvas, freeLookWeb;
     [SerializeField] List<GameObject> avatarPanels;
     [SerializeField] Sprite open, close;
     [SerializeField] Image gameBackground, charactersBackground, settingsBackgorund, nicknameBackground;
@@ -296,6 +296,9 @@ public class UIManager : MonoBehaviour
 #if UNITY_ANDROID || UNITY_IOS
         freeLookMobile.gameObject.SetActive(true);
         moveJoystick.gameObject.SetActive(true);
+#endif
+#if UNITY_WEBGL
+        freeLookWeb.SetActive(true);
 #endif
     }
     void StepZeroOne()

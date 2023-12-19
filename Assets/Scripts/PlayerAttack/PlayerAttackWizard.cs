@@ -57,7 +57,15 @@ public class PlayerAttackWizard : MonoBehaviour
             Array.Sort(colliders, new DistanceCompare(transform));
             foreach (var item in colliders)
             {
-                if (item.gameObject.layer == 9)
+                if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
+                {
+                    Debug.Log(item.gameObject.name);
+                    transform.LookAt(item.transform);
+                    firePoint.position = item.transform.position + Vector3.up * 3;
+                    SpawnBullet();
+                    break;
+                }
+                else if (item.gameObject.layer == 9)
                 {
                     Debug.Log(item.gameObject.name);
                     transform.LookAt(item.transform);
@@ -65,15 +73,7 @@ public class PlayerAttackWizard : MonoBehaviour
                     firePoint.position = item.transform.position + Vector3.up * 3;
                     SpawnBullet();
                     break;
-                }
-                else if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
-                {
-                    Debug.Log(item.gameObject.name);
-                    transform.LookAt(item.transform);
-                    firePoint.position = item.transform.position + Vector3.up * 3;
-                    SpawnBullet();
-                    break;
-                }
+                } 
             }
             return;
         }
@@ -87,21 +87,21 @@ public class PlayerAttackWizard : MonoBehaviour
             Array.Sort(colliders, new DistanceCompare(transform));
             foreach (var item in colliders)
             {
-                if (item.gameObject.layer == 9)
+                if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
+                {
+                    transform.LookAt(item.transform);
+                    firePoint.position = item.transform.position + Vector3.up * 3;
+                    SpawnSuperBullet();
+                    break;
+                }
+                else if (item.gameObject.layer == 9)
                 {
                     transform.LookAt(item.transform);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     firePoint.position = item.transform.position + Vector3.up * 3;
                     SpawnSuperBullet();
                     break;
-                }
-                else if (item.gameObject.layer == 12 && ServerControl.server.nickName != item.gameObject.name)
-                {
-                    transform.LookAt(item.transform);
-                    firePoint.position = item.transform.position + Vector3.up * 3;
-                    SpawnSuperBullet();
-                    break;
-                }
+                } 
             }
         }
     }
