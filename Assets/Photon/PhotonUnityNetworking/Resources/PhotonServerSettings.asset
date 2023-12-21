@@ -89,6 +89,7 @@ MonoBehaviour:
   - BulletSuperAttack
   - SuperLineActive
   - TokenCollect
+  - Power
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

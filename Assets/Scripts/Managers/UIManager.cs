@@ -276,9 +276,16 @@ public class UIManager : MonoBehaviour
     }
     void UIClose()
     {
+        if (freeLookWeb.activeSelf)
+        {
+            freeLookWeb.SetActive(false);
+        }
         for (int i = 0; i < canvas.transform.childCount - 4; i++)
         {
-            canvas.transform.GetChild(i).gameObject.SetActive(false);
+            if (canvas.transform.GetChild(i).gameObject.activeSelf)
+            {
+                canvas.transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
     public void StepZero()
