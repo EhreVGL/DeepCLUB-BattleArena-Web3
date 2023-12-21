@@ -60,7 +60,6 @@ public class ElectricCrash : MonoBehaviour
             });
         if (powerHealth == 0)
         {
-            //Kutu açýlma animasyonu olacak
             transform.GetChild(transform.childCount - 1).DORotate(new Vector3(27, 0, 0), .5f).SetEase(Ease.Linear);
             transform.GetChild(transform.childCount - 2).DORotate(new Vector3(27, 90, 270), .5f).SetEase(Ease.Linear);
             transform.GetChild(transform.childCount - 3).DORotate(new Vector3(27, 180, 180), .5f).SetEase(Ease.Linear);
@@ -70,5 +69,12 @@ public class ElectricCrash : MonoBehaviour
             int randomId = 1;
             transform.GetChild(randomId).gameObject.SetActive(true);
         }
+        int newAttack = (int)attack;
+        ShowDamage(newAttack.ToString(), other.transform.position + Vector3.up, Quaternion.Euler(0, 90, 0));
+    }
+    void ShowDamage(string text, Vector3 pos, Quaternion rotation)
+    {
+        GameObject prefab = Instantiate(UIManager.uIManager.damagePopup, pos, rotation);
+        prefab.GetComponentInChildren<TextMesh>().text = text;
     }
 }

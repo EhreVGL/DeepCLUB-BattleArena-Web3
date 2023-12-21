@@ -63,10 +63,6 @@ public class Bullet : MonoBehaviourPun
                 photonView.RPC("PowerupAttack", RpcTarget.All, otherName);
                 PhotonNetwork.Destroy(gameObject);
             }
-            //if (other.gameObject.layer == 0)
-            //{
-            //    PhotonNetwork.Destroy(gameObject);
-            //}
         }
     }
     [PunRPC]
@@ -90,14 +86,6 @@ public class Bullet : MonoBehaviourPun
                 lightning.transform.localScale *= 3;
             }
         }
-        //if (parent.GetComponent<Player>().attackType == Player.Attack.HealthAttack)
-        //{
-        //    parent.GetComponent<Player>().health += (parent.GetComponent<Player>().maxHealth * 15 / 1000);
-        //    parent.GetComponent<Player>().health = parent.GetComponent<Player>().health > parent.GetComponent<Player>().maxHealth ? 
-        //        parent.GetComponent<Player>().maxHealth : parent.GetComponent<Player>().health;
-        //    parent.GetComponent<Player>().healthText.text = ((int)parent.GetComponent<Player>().health).ToString();
-        //    parent.GetComponent<Player>().healthBar.fillAmount = parent.GetComponent<Player>().health / parent.GetComponent<Player>().maxHealth;
-        //}
         TextMeshProUGUI healthText = other.GetComponent<Player>().healthText;
         other.GetComponent<Player>().health -= attack;
         other.GetComponent<Player>().health = Mathf.Clamp(other.GetComponent<Player>().health, 0, other.GetComponent<Player>().maxHealth);
@@ -190,7 +178,6 @@ public class Bullet : MonoBehaviourPun
         }
         powerHealth -= attack;
         powerHealth = powerHealth <= 0 ? 0 : powerHealth;
-        //powerHealthText.text = powerHealth.ToString();
         powerHealthText.text = ((int)powerHealth).ToString();
         powerBar.DOFillAmount(powerHealth / 1000, .1f).
             SetEase(Ease.Linear).OnComplete(() =>

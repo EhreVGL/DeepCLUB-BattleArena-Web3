@@ -365,19 +365,6 @@ public class Player : MonoBehaviour
         powerImage.gameObject.SetActive(true);
         AudioSource.PlayClipAtPoint(collect, transform.position, .5f);
     }
-    //[PunRPC]
-    //void PowerHealth(string otherName)
-    //{
-    //    health += 400;
-    //    maxHealth += 400;
-    //    healthText.text = ((int)health).ToString();
-    //    healthReduceBar.color = Color.blue;
-    //    healthReduceBar.DOFillAmount(health / maxHealth, .25f).
-    //        SetEase(Ease.Linear).OnComplete(() =>
-    //        {
-    //            healthBar.DOFillAmount(healthReduceBar.fillAmount, .25f).SetEase(Ease.Linear);
-    //        });
-    //}
     [PunRPC]
     void TokenCollect(string otherName)
     {

@@ -299,7 +299,6 @@ public class PlayerAttackMelee : MonoBehaviour
         TextMeshProUGUI healthText = other.GetComponent<Player>().healthText;
         other.GetComponent<Player>().health -= attack;
         other.GetComponent<Player>().health = Mathf.Clamp(other.GetComponent<Player>().health, 0, other.GetComponent<Player>().maxHealth);
-        //other.GetComponent<Player>().healthBar.fillAmount = other.GetComponent<Player>().health / other.GetComponent<Player>().maxHealth;
         other.GetComponent<Player>().healthReduceBar.color = Color.red;
         other.GetComponent<Player>().healthBar.DOFillAmount(other.GetComponent<Player>().health / other.GetComponent<Player>().maxHealth, .25f).
             SetEase(Ease.Linear).OnComplete(() =>
@@ -307,14 +306,9 @@ public class PlayerAttackMelee : MonoBehaviour
                 other.GetComponent<Player>().healthReduceBar.DOFillAmount(other.GetComponent<Player>().healthBar.fillAmount, .25f).SetEase(Ease.Linear);
             });
         healthText.text = ((int)other.GetComponent<Player>().health).ToString();
-        //if (other.GetComponent<PhotonView>() != null && other.GetComponent<PhotonView>().IsMine == true)
-        //{
-        //    other.GetComponent<Player>().healthTime = 0;
-        //}
         other.GetComponent<Player>().healthTime = 0;
         int newAttack = (int)attack;
         ShowDamage(newAttack.ToString(), other.transform.position + Vector3.up, other.transform.rotation);
-        //GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + 1, 1).SetEase(Ease.Linear);
         if (!super)
         {
             GetComponent<Player>().superBar.DOFillAmount(GetComponent<Player>().superBar.fillAmount + .2f, 1).SetEase(Ease.Linear);
@@ -331,7 +325,6 @@ public class PlayerAttackMelee : MonoBehaviour
             }
             if (gameObject.GetComponent<PhotonView>().IsMine == true)
             {
-                //Game over ekraný açýlacak
                 ServerControl.server.killCount++;
                 UIManager.uIManager.killCountText.text = "Kill: " + ServerControl.server.killCount.ToString();
             }
@@ -345,7 +338,6 @@ public class PlayerAttackMelee : MonoBehaviour
             {
                 UIManager.uIManager.deathInfo.text = other.gameObject.name.Substring(0, other.gameObject.name.Length - 5);
             }
-            //Destroy(other.GetComponent<Player>().canvas);
             if (other.GetComponent<Player>().powerCount == 0)
             {
                 other.GetComponent<Player>().power[0].transform.parent = null;
@@ -386,7 +378,6 @@ public class PlayerAttackMelee : MonoBehaviour
             });
         if (powerHealth == 0)
         {
-            //Kutu açýlma animasyonu olacak
             other.transform.GetChild(other.transform.childCount - 1).DORotate(new Vector3(27, 0, 0), .5f).SetEase(Ease.Linear);
             other.transform.GetChild(other.transform.childCount - 2).DORotate(new Vector3(27, 90, 270), .5f).SetEase(Ease.Linear);
             other.transform.GetChild(other.transform.childCount - 3).DORotate(new Vector3(27, 180, 180), .5f).SetEase(Ease.Linear);
