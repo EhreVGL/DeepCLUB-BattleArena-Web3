@@ -69,8 +69,8 @@ public class ElectricCrash : MonoBehaviour
             int randomId = 1;
             transform.GetChild(randomId).gameObject.SetActive(true);
         }
-        int newAttack = (int)attack;
-        ShowDamage(newAttack.ToString(), other.transform.position + Vector3.up, Quaternion.Euler(0, 90, 0));
+        int newAttack = 100;
+        ShowDamage(newAttack.ToString(), transform.position + Vector3.up, Quaternion.Euler(0, 90, 0));
     }
     void ShowDamage(string text, Vector3 pos, Quaternion rotation)
     {

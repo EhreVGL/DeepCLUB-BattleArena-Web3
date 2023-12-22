@@ -19,9 +19,9 @@ public class UIManager : MonoBehaviour
     public Button play, settings, character;
     public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame;
     public TMP_InputField message, messageArea;
-    public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, token, collect;
+    public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, token, collect, xpLevel;
     public GameObject killImage, warningImage, damagePopup, settingsPanel;
-    public Image mainLoading, modLoading, gameBeforeLoading, gameLoading;
+    public Image mainLoading, modLoading, gameBeforeLoading, gameLoading, xpBar;
     public List<Sprite> characterImages;
     public FloatingJoystick moveJoystick;
     public FixedJoystick shootJoystick, superJoystick;

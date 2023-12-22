@@ -138,33 +138,17 @@ public class ServerControl : MonoBehaviourPunCallbacks
             }
         }
     }
-    IEnumerator LeavePlayers()
-    {
-        leave = true;
-        start = false;
-        yield return new WaitForSeconds(2);
-        UIManager.uIManager.birdSource.Play();
-        UIManager.uIManager.LoadingStart(UIManager.uIManager.mainLoading);
-        if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom)
-        {
-            Debug.Log("Photon ağına bağlı değil veya odada değil.");
-            GameExit();
-        }
-        else
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-    }
     void Win()
     {
         AudioSource.PlayClipAtPoint(win, transform.position, .5f);
         UIManager.uIManager.win.transform.parent.GetComponent<Image>().sprite = UIManager.uIManager.winSprite;
         UIManager.uIManager.win.transform.parent.gameObject.SetActive(true);
-        result = ((4 - myResult) * 50);
+        result = (4 - myResult) * 50;
         if (wallet)
         {
             result += (tokenCount * 50);
-            UIManager.uIManager.collect.text = (4 - myResult).ToString() + " x" + " 50" + " + " + tokenCount.ToString() + " x" + " 50" + " = " + result.ToString();
+            UIManager.uIManager.collect.text = "(" + (4 - myResult).ToString() + " x" + " 50" + " + " + tokenCount.ToString() +
+                " x" + " 50" + ")" + "*" + (1 + (XPManager.xp.xpLevel * .1f)) + " = " + result.ToString();
             int token = int.Parse(UIManager.uIManager.token.text);
             int coin = int.Parse(UIManager.uIManager.coin.text);
             UIManager.uIManager.token.text = (token + result).ToString();
@@ -173,10 +157,13 @@ public class ServerControl : MonoBehaviourPunCallbacks
         else
         {
             result += (coinCount * 25);
-            UIManager.uIManager.collect.text = (4 - myResult).ToString() + " x" + " 50" + " + " + coinCount.ToString() + " x" + " 25" + " = " + result.ToString();
+            UIManager.uIManager.collect.text = "(" + (4 - myResult).ToString() + " x" + " 50" + " + " + tokenCount.ToString() +
+                " x" + " 25" + ")" + " * " + (1 + (XPManager.xp.xpLevel * .1f)) + " = " + result.ToString();
             int coin = int.Parse(UIManager.uIManager.coin.text);
             UIManager.uIManager.coin.text = (coin + result).ToString();
         }
+        float level = XPManager.xp.xpLevel * .1f;
+        result *= (1 + level);
         leave = true;
     }
     void Lose()
@@ -187,7 +174,8 @@ public class ServerControl : MonoBehaviourPunCallbacks
         if (wallet)
         {
             result = (tokenCount * 50);
-            UIManager.uIManager.collect.text = tokenCount.ToString() + " x" + " 50" + " = " + result.ToString();
+            UIManager.uIManager.collect.text = "(" + tokenCount.ToString() + " x" + " 50" + ")" + " * " + 
+                (1 + (XPManager.xp.xpLevel * .1f)) + " = " + result.ToString();
             int token = int.Parse(UIManager.uIManager.token.text);
             int coin = int.Parse(UIManager.uIManager.coin.text);
             UIManager.uIManager.token.text = (token + result).ToString();
@@ -196,10 +184,13 @@ public class ServerControl : MonoBehaviourPunCallbacks
         else
         {
             result = (coinCount * 25);
-            UIManager.uIManager.collect.text = coinCount.ToString() + " x" + " 25" + " = " + result.ToString();
+            UIManager.uIManager.collect.text = "(" + tokenCount.ToString() + " x" + " 25" + ")" + " * " +
+                (1 + (XPManager.xp.xpLevel * .1f)) + " = " + result.ToString();
             int coin = int.Parse(UIManager.uIManager.coin.text);
             UIManager.uIManager.coin.text = (coin + result).ToString();
         }
+        float level = XPManager.xp.xpLevel * .1f;
+        result *= (1 + level);
         leave = true;
     }
     //1. step bittikten sonra 2. stepe başlamak için oyuna girme
@@ -207,10 +198,6 @@ public class ServerControl : MonoBehaviourPunCallbacks
     {
         chatAtcive = false;
         UIManager.uIManager.NewStepOne();
-        //for (int i = 0; i < characters.Count; i++)
-        //{
-        //    characters[i].gameObject.SetActive(false);
-        //}
         Camera.main.transform.position = camPos;
         Camera.main.transform.rotation = camRot;
         PhotonNetwork.JoinLobby();
@@ -220,10 +207,6 @@ public class ServerControl : MonoBehaviourPunCallbacks
         modId = -1;
         chatAtcive = false;
         UIManager.uIManager.StepOne();
-        //for (int i = 0; i < characters.Count; i++)
-        //{
-        //    characters[i].gameObject.SetActive(true);
-        //}
         mainFloor.SetActive(false);
         mainShip.SetActive(false);
         cMFreeLook.SetActive(false);
@@ -232,10 +215,6 @@ public class ServerControl : MonoBehaviourPunCallbacks
     }
     public void Rejoin()
     {
-        //for (int i = 0; i < characters.Count; i++)
-        //{
-        //    characters[i].gameObject.SetActive(false);
-        //}
         floors[modId].SetActive(true);
         PhotonNetwork.JoinLobby();
         UIManager.uIManager.StepTwo();
