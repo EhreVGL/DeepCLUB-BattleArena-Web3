@@ -29,7 +29,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
     float electricPosX, electricPosZ;
     public bool start, leave, mod;
     public List<GameObject> powerups, collectable;
-    Vector3 camPos;
+    Vector3 camPos, shipPos;
     Quaternion camRot;
     int roomIndex, lobbyIndex;
     public List<GameObject> newPlayers;
@@ -63,6 +63,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
 
         camPos = Camera.main.transform.position;
         camRot = Camera.main.transform.rotation;
+        shipPos = mainShip.transform.position;
         //play.onClick.AddListener(CharacterChoose);
         //PhotonNetwork.ConnectUsingSettings();//Servera bağlanma isteği
         //PhotonNetwork.JoinLobby();//Lobiye bağlanma
@@ -244,6 +245,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
             collectable[i].transform.GetChild(collectable[i].transform.childCount - 3).rotation = Quaternion.Euler(-90, 180, 180);
             collectable[i].transform.GetChild(collectable[i].transform.childCount - 4).rotation = Quaternion.Euler(-90, 270, 90);
         }
+        mainShip.transform.position = shipPos;
         Camera.main.transform.position = camPos;
         Camera.main.transform.rotation = camRot;
         UIManager.uIManager.StepZero();

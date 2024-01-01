@@ -120,6 +120,7 @@ public class UIManager : MonoBehaviour
     {
         if (moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move Game")
         {
+            ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().enabled = true;
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().isStopped = false;
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().SetDestination(ServerControl.server.portal.transform.position);
             ai = true;
@@ -130,6 +131,7 @@ public class UIManager : MonoBehaviour
             moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move Game";
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().isStopped = true;
             ai = false;
+            ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().enabled = false;
         }
         for (int i = 0; i < ServerControl.server.mainAvatar.transform.childCount; i++)
         {

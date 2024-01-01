@@ -26,7 +26,7 @@ public class Avatar : MonoBehaviour
     public List<Material> bodyMaterials, headMaterials;
     string avatarId;
     public AudioClip notification;
-    bool wall;
+    bool wall, move = true;
     private void Awake()
     {
         canvas.transform.parent = null;
@@ -57,6 +57,10 @@ public class Avatar : MonoBehaviour
     }
     void Update()
     {
+        if (!move)
+        {
+            return;
+        }
         if (photonView.IsMine)
         {
             UIManager.uIManager.playerCount.text = GameObject.FindGameObjectsWithTag("Avatar").Length.ToString();
@@ -86,22 +90,28 @@ public class Avatar : MonoBehaviour
     {
         if (other.gameObject.layer == 6 && photonView.IsMine)
         {
-            UIManager.uIManager.birdSource.Play();
-            UIManager.uIManager.LoadingStart(UIManager.uIManager.modLoading);
-            ServerControl.server.mod = true;
-            PhotonNetwork.LeaveRoom();
+            move = false;
+            //transform.GetChild(ServerControl.server.avatarsId[0]).GetComponent<Animator>().SetBool("Walk", false);
+            transform.GetChild(ServerControl.server.avatarsId[0]).gameObject.SetActive(false);
+            //Debug.Log(transform.GetChild(ServerControl.server.avatarsId[0]).gameObject.name);
+            ServerControl.server.mainShip.transform.DOMoveZ(ServerControl.server.mainShip.transform.position.z + 15, 2).SetEase(Ease.Linear).OnComplete(() => 
+            {
+                ServerControl.server.mainShip.GetComponent<Animator>().SetTrigger("Octopus");
+                StartCoroutine(LeaveMainRoom());
+                //PhotonNetwork.LeaveRoom();
+            });
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (photonView.IsMine && !collision.gameObject.CompareTag("Ground"))
+        if (photonView.IsMine && !collision.gameObject.CompareTag("Ground") && !collision.gameObject.CompareTag("Lift"))
         {
             wall = true;
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (photonView.IsMine && !collision.gameObject.CompareTag("Ground"))
+        if (photonView.IsMine && !collision.gameObject.CompareTag("Ground") && !collision.gameObject.CompareTag("Lift"))
         {
             StartCoroutine(NotWall());
         }
@@ -279,5 +289,13 @@ public class Avatar : MonoBehaviour
             AudioSource.PlayClipAtPoint(notification, transform.position, .5f);
             UIManager.uIManager.warningImage.SetActive(true);
         }
+    }
+    IEnumerator LeaveMainRoom()
+    {
+        yield return new WaitForSeconds(1);
+        UIManager.uIManager.birdSource.Play();
+        UIManager.uIManager.LoadingStart(UIManager.uIManager.modLoading);
+        ServerControl.server.mod = true;
+        PhotonNetwork.LeaveRoom();
     }
 }
