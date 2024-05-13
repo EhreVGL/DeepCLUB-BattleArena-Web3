@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     public TMP_InputField message, messageArea;
     public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, token, collect, xpLevel;
     public GameObject killImage, warningImage, damagePopup, settingsPanel;
-    public Image mainLoading, modLoading, gameBeforeLoading, gameLoading, xpBar;
+    public Image mainLoading, modLoading, gameBeforeLoading, gameLoading, xpBar, interact;
     public List<Sprite> characterImages;
     public FloatingJoystick moveJoystick;
     public FixedJoystick shootJoystick, superJoystick;
@@ -115,6 +115,11 @@ public class UIManager : MonoBehaviour
                 StepZero();
             }
         }
+    }
+    public void Interact(bool state, string message)
+    {
+        interact.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        interact.gameObject.SetActive(state);
     }
     void GameMove()
     {

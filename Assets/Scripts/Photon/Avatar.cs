@@ -69,6 +69,10 @@ public class Avatar : MonoBehaviour
             {
                 return;
             }
+            if (UIManager.uIManager.interact.gameObject.activeSelf && Input.GetKeyDown(KeyCode.E))
+            {
+                Application.OpenURL("https://www.youtube.com/watch?v=vIaH35-MLsk");
+            }
             //if (Input.GetKeyDown(KeyCode.Space) && ground)
             //{
             //    rb.velocity = Vector3.up * 4;
@@ -100,6 +104,17 @@ public class Avatar : MonoBehaviour
                 StartCoroutine(LeaveMainRoom());
                 //PhotonNetwork.LeaveRoom();
             });
+        }
+        else if (other.gameObject.layer == 20 && photonView.IsMine)
+        {
+            UIManager.uIManager.Interact(true, "Interact");
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 20 && photonView.IsMine)
+        {
+            UIManager.uIManager.Interact(false, "");
         }
     }
     private void OnCollisionEnter(Collision collision)
