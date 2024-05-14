@@ -71,7 +71,7 @@ public class Avatar : MonoBehaviour
             }
             if (UIManager.uIManager.interact.gameObject.activeSelf && Input.GetKeyDown(KeyCode.E))
             {
-                Application.OpenURL("https://www.youtube.com/watch?v=vIaH35-MLsk");
+                Application.OpenURL("https://www.spatial.io/s/MARDIN-UMOB-22-5-ARCHERIORI-ATOLYE-SERGISI-65c7563c849e3776c719ee45?share=6929607632919475985");
             }
             //if (Input.GetKeyDown(KeyCode.Space) && ground)
             //{
@@ -206,7 +206,7 @@ public class Avatar : MonoBehaviour
     }
     IEnumerator NotWall()
     {
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         wall = false;
     }
     private void LiftDown()

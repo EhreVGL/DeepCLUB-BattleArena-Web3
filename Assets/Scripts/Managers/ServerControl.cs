@@ -150,9 +150,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
             result += (tokenCount * 50);
             UIManager.uIManager.collect.text = "(" + (4 - myResult).ToString() + " x" + " 50" + " + " + tokenCount.ToString() +
                 " x" + " 50" + ")" + "*" + (1 + (XPManager.xp.xpLevel * .1f)) + " = " + result.ToString();
-            int token = int.Parse(UIManager.uIManager.token.text);
             int coin = int.Parse(UIManager.uIManager.coin.text);
-            UIManager.uIManager.token.text = (token + result).ToString();
             UIManager.uIManager.coin.text = (coin + result).ToString();
         }
         else
@@ -177,9 +175,7 @@ public class ServerControl : MonoBehaviourPunCallbacks
             result = (tokenCount * 50);
             UIManager.uIManager.collect.text = "(" + tokenCount.ToString() + " x" + " 50" + ")" + " * " + 
                 (1 + (XPManager.xp.xpLevel * .1f)) + " = " + result.ToString();
-            int token = int.Parse(UIManager.uIManager.token.text);
             int coin = int.Parse(UIManager.uIManager.coin.text);
-            UIManager.uIManager.token.text = (token + result).ToString();
             UIManager.uIManager.coin.text = (coin + result).ToString();
         }
         else

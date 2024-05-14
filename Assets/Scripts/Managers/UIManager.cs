@@ -17,9 +17,9 @@ public class UIManager : MonoBehaviour
     public List<TextMeshProUGUI> playersNicknames;
     public List<Image> playersCharacter;
     public Button play, settings, character;
-    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame;
+    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame, survivor;
     public TMP_InputField message, messageArea;
-    public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, token, collect, xpLevel;
+    public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, collect, xpLevel;
     public GameObject killImage, warningImage, damagePopup, settingsPanel;
     public Image mainLoading, modLoading, gameBeforeLoading, gameLoading, xpBar, interact;
     public List<Sprite> characterImages;
@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
         playersCam.onClick.AddListener(PlayerCamChange);
         messageOpen.onClick.AddListener(MessageOpen);
         moveGame.onClick.AddListener(GameMove);
+        survivor.onClick.AddListener(SurvivorOpen);
     }
     void AvatarPanelsActive(int avatarPanel)
     {
@@ -173,6 +174,10 @@ public class UIManager : MonoBehaviour
         mainHome.gameObject.SetActive(false);
         PhotonNetwork.CurrentRoom.IsOpen = true;
         PhotonNetwork.LeaveRoom();
+    }
+    void SurvivorOpen()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=vIaH35-MLsk");
     }
     void Settings()
     {
@@ -326,9 +331,9 @@ public class UIManager : MonoBehaviour
         mainHome.gameObject.SetActive(true);
         gameBackground.gameObject.SetActive(true);
         character.gameObject.SetActive(true);
+        survivor.gameObject.SetActive(true);
         settings.gameObject.SetActive(true);
         coin.gameObject.SetActive(true);
-        token.gameObject.SetActive(true);
     }
     public void StepOneOne()
     {

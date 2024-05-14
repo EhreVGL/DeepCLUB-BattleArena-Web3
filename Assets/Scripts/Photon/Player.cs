@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator NotWall()
     {
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         wall = false;
     }
     void PoisonActive()
