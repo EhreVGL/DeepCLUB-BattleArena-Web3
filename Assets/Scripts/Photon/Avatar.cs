@@ -39,7 +39,10 @@ public class Avatar : MonoBehaviour
         if (photonView.IsMine)
         {
             InvokeRepeating("LiftDown", 1, 6);
-            UIManager.uIManager.birdSource.Play();
+            if (UIManager.uIManager.sound.GetComponent<Image>().sprite == UIManager.uIManager.closeSound)
+            {
+                UIManager.uIManager.birdSource.Play();
+            }
             ServerControl.server.cMFreeLook.SetActive(true);
 #if UNITY_ANDROID || UNITY_IOS
             ServerControl.server.cMFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_InputAxisName = "";

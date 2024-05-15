@@ -7,6 +7,7 @@ using Photon.Pun;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine.AI;
+using UnityEngine.Video;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class UIManager : MonoBehaviour
     public List<TextMeshProUGUI> playersNicknames;
     public List<Image> playersCharacter;
     public Button play, settings, character;
-    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame, survivor;
+    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame, sound, survivor, multiplayer;
     public TMP_InputField message, messageArea;
     public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, collect, xpLevel;
     public GameObject killImage, warningImage, damagePopup, settingsPanel;
@@ -36,7 +37,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Sprite selectCharacter, unSelectCharacter;
     [SerializeField] Slider effectsound, mainSound;
     [SerializeField] List<Sprite> hairs;
-    public Sprite winSprite, loseSprite;
+    [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] VideoClip first, second;
+    public Sprite winSprite, loseSprite, closeSound, openSound;
     public bool ai;
     private void Awake()
     {
@@ -56,7 +59,9 @@ public class UIManager : MonoBehaviour
         avatarPanel[5].onClick.AddListener(delegate { AvatarPanelsActive(5); });
 
         play.onClick.AddListener(Login);
-        character.onClick.AddListener(Character);
+        character.onClick.AddListener(Games);
+        multiplayer.onClick.AddListener(Character);
+        survivor.onClick.AddListener(SurvivorOpen);
         settings.onClick.AddListener(Settings);
         playGame.onClick.AddListener(WaitPlayers);
         leave.onClick.AddListener(LeaveRoom);
@@ -65,11 +70,29 @@ public class UIManager : MonoBehaviour
         playersCam.onClick.AddListener(PlayerCamChange);
         messageOpen.onClick.AddListener(MessageOpen);
         moveGame.onClick.AddListener(GameMove);
-        survivor.onClick.AddListener(SurvivorOpen);
+        sound.onClick.AddListener(SoundState);
+        videoPlayer.loopPointReached += OnVideoEnd;
+    }
+    void OnVideoEnd(VideoPlayer vp)
+    {
+        // Video bittiðinde yapýlacak iþlemler
+        if (videoPlayer.clip == first)
+        {
+            videoPlayer.clip = second;
+        }
+        else if (videoPlayer.clip == second)
+        {
+            videoPlayer.gameObject.SetActive(false);
+        }
+        Debug.Log("Video bitti!");
+        // Buraya istediðiniz kodlarý ekleyin
     }
     void AvatarPanelsActive(int avatarPanel)
     {
-        AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        if (sound.GetComponent<Image>().sprite == closeSound)
+        {
+            AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        }
         for (int i = 0; i < avatarPanels.Count; i++)
         {
             avatarPanels[i].gameObject.SetActive(false);
@@ -78,7 +101,10 @@ public class UIManager : MonoBehaviour
     }
     public void AvatarPartsSelect(int partId)
     {
-        AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        if (sound.GetComponent<Image>().sprite == closeSound)
+        {
+            AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        }
         int panelId = -1;
         for (int i = 0; i < avatarPanels.Count; i++)
         {
@@ -102,14 +128,35 @@ public class UIManager : MonoBehaviour
             avatarPanel[panelId].GetComponent<Button>().colors = colorBlock;
         }
     }
+    void SoundState()
+    {
+        if (sound.GetComponent<Image>().sprite == closeSound)
+        {
+            sound.GetComponent<Image>().sprite = openSound;
+        }
+        else
+        {
+            sound.GetComponent<Image>().sprite = closeSound;
+        }
+        if (sound.GetComponent<Image>().sprite == closeSound)
+        {
+            AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        }
+    }
     void Login()
     {
         if (nicknameText.text.Length >= 6 && !nicknameText.text.Contains(" "))
         {
             if (ServerControl.server.step == 0)
             {
-                AudioSource.PlayClipAtPoint(click, transform.position, .5f);
-                birdSource.Play();
+                if (sound.GetComponent<Image>().sprite == closeSound)
+                {
+                    AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+                }
+                if (sound.GetComponent<Image>().sprite == closeSound)
+                {
+                    birdSource.Play();
+                }
                 LoadingStart(mainLoading);
                 PhotonNetwork.ConnectUsingSettings();
                 ServerControl.server.nickName = nicknameText.text;
@@ -124,6 +171,7 @@ public class UIManager : MonoBehaviour
     }
     void GameMove()
     {
+        AudioSource.PlayClipAtPoint(click, transform.position, .5f);
         if (moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move Game")
         {
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().enabled = true;
@@ -149,7 +197,10 @@ public class UIManager : MonoBehaviour
     }
     public void MessageOpen()
     {
-        AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        if (sound.GetComponent<Image>().sprite == closeSound)
+        {
+            AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        }
         ServerControl.server.chatAtcive = !ServerControl.server.chatAtcive;
         message.gameObject.SetActive(!message.gameObject.activeSelf);
         messageArea.gameObject.SetActive(!messageArea.gameObject.activeSelf);
@@ -189,8 +240,16 @@ public class UIManager : MonoBehaviour
     }
     void LeaveSettings()
     {
+        AudioSource.PlayClipAtPoint(click, transform.position, .5f);
         UIClose();
         StepOne();
+    }
+    void Games()
+    {
+        AudioSource.PlayClipAtPoint(click, transform.position, .5f);
+        survivor.gameObject.SetActive(true);
+        multiplayer.gameObject.SetActive(true);
+        home.gameObject.SetActive(true);
     }
     void Character()
     {
@@ -331,7 +390,6 @@ public class UIManager : MonoBehaviour
         mainHome.gameObject.SetActive(true);
         gameBackground.gameObject.SetActive(true);
         character.gameObject.SetActive(true);
-        survivor.gameObject.SetActive(true);
         settings.gameObject.SetActive(true);
         coin.gameObject.SetActive(true);
     }
