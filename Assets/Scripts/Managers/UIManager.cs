@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
     }
     void SurvivorOpen()
     {
-        Application.OpenURL("https://www.youtube.com/watch?v=vIaH35-MLsk");
+        Application.OpenURL("https://deeplaystudio.itch.io/survivor");
     }
     void Settings()
     {
