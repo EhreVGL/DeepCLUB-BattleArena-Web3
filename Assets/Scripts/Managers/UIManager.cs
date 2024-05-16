@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] VideoClip first, second;
     public Sprite winSprite, loseSprite, closeSound, openSound;
     public bool ai;
+    [SerializeField] RawImage soundRaw;
     private void Awake()
     {
         uIManager = this;
@@ -83,6 +84,7 @@ public class UIManager : MonoBehaviour
         else if (videoPlayer.clip == second)
         {
             videoPlayer.gameObject.SetActive(false);
+            soundRaw.gameObject.SetActive(false);
         }
         Debug.Log("Video bitti!");
         // Buraya istediðiniz kodlarý ekleyin
