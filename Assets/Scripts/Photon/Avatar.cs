@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System.Collections;
 using Cinemachine;
+using TMPro;
 
 public class Avatar : MonoBehaviour
 {
@@ -89,6 +90,10 @@ public class Avatar : MonoBehaviour
             //{
             //    ground = false;
             //}
+            if (UIManager.uIManager.ai)
+            {
+                return;
+            }
             WebMove();
             AndroidMove();
         }
@@ -101,12 +106,14 @@ public class Avatar : MonoBehaviour
             //transform.GetChild(ServerControl.server.avatarsId[0]).GetComponent<Animator>().SetBool("Walk", false);
             transform.GetChild(ServerControl.server.avatarsId[0]).gameObject.SetActive(false);
             //Debug.Log(transform.GetChild(ServerControl.server.avatarsId[0]).gameObject.name);
-            ServerControl.server.mainShip.transform.DOMoveZ(ServerControl.server.mainShip.transform.position.z + 15, 2).SetEase(Ease.Linear).OnComplete(() => 
-            {
-                ServerControl.server.mainShip.GetComponent<Animator>().SetTrigger("Octopus");
-                StartCoroutine(LeaveMainRoom());
-                //PhotonNetwork.LeaveRoom();
-            });
+            StartCoroutine(LeaveMainRoom());
+            UIManager.uIManager.moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "OYUNA GÝT!";
+            //ServerControl.server.mainShip.transform.DOMoveZ(ServerControl.server.mainShip.transform.position.z + 15, 2).SetEase(Ease.Linear).OnComplete(() => 
+            //{
+            //    ServerControl.server.mainShip.GetComponent<Animator>().SetTrigger("Octopus");
+            //    StartCoroutine(LeaveMainRoom());
+            //    //PhotonNetwork.LeaveRoom();
+            //});
         }
         else if (other.gameObject.layer == 20 && photonView.IsMine)
         {
@@ -164,7 +171,7 @@ public class Avatar : MonoBehaviour
             transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
             transform.GetChild(ServerControl.server.avatarsId[0]).GetComponent<Animator>().SetBool("Walk", true);
         }
-        else if(pressed && !UIManager.uIManager.ai)
+        else
         {
             transform.GetChild(ServerControl.server.avatarsId[0]).GetComponent<Animator>().SetBool("Walk", false);
         }

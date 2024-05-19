@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     public List<TextMeshProUGUI> playersNicknames;
     public List<Image> playersCharacter;
     public Button play, settings, character;
-    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame, sound, survivor, multiplayer;
+    public Button messageOpen, leave, playersCam, mainHome, home, playGame, moveGame, sound, survivor, multiplayer, skip;
     public TMP_InputField message, messageArea;
     public TextMeshProUGUI killInfo, deathInfo, killCountText, win, time, coin, collect, xpLevel;
     public GameObject killImage, warningImage, damagePopup, settingsPanel;
@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     public List<Sprite> characterImages;
     public FloatingJoystick moveJoystick;
     public FixedJoystick shootJoystick, superJoystick;
-    [SerializeField] GameObject canvas, freeLookWeb;
+    [SerializeField] GameObject canvas, freeLookWeb, modBg;
     [SerializeField] List<GameObject> avatarPanels;
     [SerializeField] Sprite open, close;
     [SerializeField] Image gameBackground, charactersBackground, settingsBackgorund, nicknameBackground;
@@ -72,7 +72,19 @@ public class UIManager : MonoBehaviour
         messageOpen.onClick.AddListener(MessageOpen);
         moveGame.onClick.AddListener(GameMove);
         sound.onClick.AddListener(SoundState);
+        skip.onClick.AddListener(SkipVideo);
         videoPlayer.loopPointReached += OnVideoEnd;
+    }
+    void SkipVideo()
+    {
+        if (videoPlayer.clip == first)
+        {
+            videoPlayer.time = 2;
+        }
+        else if (videoPlayer.clip == second)
+        {
+            videoPlayer.time = 19;
+        }
     }
     void OnVideoEnd(VideoPlayer vp)
     {
@@ -174,17 +186,17 @@ public class UIManager : MonoBehaviour
     void GameMove()
     {
         AudioSource.PlayClipAtPoint(click, transform.position, .5f);
-        if (moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "Move Game")
+        if (moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text == "OYUNA GÝT!")
         {
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().enabled = true;
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().isStopped = false;
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().SetDestination(ServerControl.server.portal.transform.position);
             ai = true;
-            moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stop";
+            moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "DUR!";
         }
         else
         {
-            moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Move Game";
+            moveGame.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "OYUNA GÝT!";
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().isStopped = true;
             ai = false;
             ServerControl.server.mainAvatar.GetComponent<NavMeshAgent>().enabled = false;
@@ -252,6 +264,7 @@ public class UIManager : MonoBehaviour
         survivor.gameObject.SetActive(true);
         multiplayer.gameObject.SetActive(true);
         home.gameObject.SetActive(true);
+        modBg.gameObject.SetActive(true);
     }
     void Character()
     {
@@ -344,7 +357,7 @@ public class UIManager : MonoBehaviour
     public void LoadingStart(Image loading)
     {
         loading.gameObject.SetActive(true);
-        loading.GetComponent<RandomInfo>().InfoText();
+        //loading.GetComponent<RandomInfo>().InfoText();
         loading.DOColor(new Color(loading.color.r, loading.color.g, loading.color.b, 1), .1f).SetEase(Ease.Linear);
     }
     void UIClose()
